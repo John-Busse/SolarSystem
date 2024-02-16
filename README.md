@@ -5,12 +5,12 @@ Rendering a solar system in OpenGL
 This project is an effort in relearning OpenGL by remaking the first project from a Computer Graphics course I took at UNR in the Fall 2021 semester.
 
 # Future plans:
--Update uv data of sphere object file for texture mapping.
--Update planetary scale and add moons in xml file.
--Add dynamic lighting and shadows.
--Add a starry background.
--Add a proper UI showing user controls, instead of having them posted in console output.
--Update Camera and Window drivers to handle variable resolutions and fullscreen.
+-Update uv data of sphere object file for texture mapping.\
+-Update planetary scale and add moons in xml file.\
+-Add dynamic lighting and shadows.\
+-Add a starry background.\
+-Add a proper UI showing user controls, instead of having them posted in console output.\
+-Update Camera and Window drivers to handle variable resolutions and fullscreen.\
 
 # Dependencies, Building, and Running
 I'm including the instructions to build and run this program on your own.
