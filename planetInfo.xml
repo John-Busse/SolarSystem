@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Planets>
+	<Planet>
+		<Name>Sun</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>0.0</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.0</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>0</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>27.0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>0</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>20</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>9</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Mercury</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>41.64</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>4.15</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>3.38</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>176.0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>1</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>0.38</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Venus</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>77.82</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>1.62</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>3.86</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>243</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>2</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>0.95</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Earth</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>107.59</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>1</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>7.25</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>1</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>3</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>1</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Mars</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>163.89</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.53</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>5.65</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>1.025</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>4</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>0.53</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Jupiter</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>559.95</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.084</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>6.09</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0.4125</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>5</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>11.209</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>1</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>JupiterRing</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>3.13</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>2</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>12</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>11.209</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Saturn</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>1030.9</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.034</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>5.51</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<RotationSpeed>0.43</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>6</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>9.4</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>1</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>SaturnRing</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>26.7</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>1</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>11</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>9.4</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Uranus</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>2068.29</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.012</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>6.48</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0.71805</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>7</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>4.0</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>1</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>UranusRing</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>82.23</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>2</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>12</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>4.0</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Neptune</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>3238.43</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.06</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>6.43</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0.667</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>8</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>3.88</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>1</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>NeptuneRing</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0</OrbitSpeed> 			<!--How fast it orbits-->
+		<OrbitTilt>28.32</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>2</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>12</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>3.88</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+	<Planet>
+		<Name>Pluto</Name>
+		<!--Orbit is handled in the translate function-->
+		<OrbitDistance>4282.41</OrbitDistance>	<!--Distance from its parent-->
+		<OrbitSpeed>0.004</OrbitSpeed> 		<!--How fast it orbits-->
+		<OrbitTilt>11.88</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<!--Rotation refers to the planets spin about its own axis-->
+		<RotationSpeed>6.375</RotationSpeed>	<!--How fast it rotates-->
+		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
+		<TextureIndex>9</TextureIndex>		<!--Which texture represents this object-->
+		<PlanetScale>0.186</PlanetScale>		<!--How big the planet is-->
+		<NumMoons>0</NumMoons>				<!--Does this planet have a moon?-->
+	</Planet>
+</Planets>
