@@ -77,7 +77,7 @@ void Camera::MoveY(bool up) {
 
 //Zoom the camera in or out (z-axis) with W and S keys
 void Camera::MoveZ(bool in) {
-    float direction = 0.1f * (in ? 0.5f : -0.5f);
+    float direction = 0.1f * (in ? 1.0f : -1.0f);
     radius += direction;
 }
 

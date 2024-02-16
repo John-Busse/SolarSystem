@@ -15,6 +15,7 @@ class Input {
         ~Input();
         static void KeyCallbackStatic(GLFWwindow* window, int key, int scancode, int action, int mods);
         void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        void InputStream();
 
     private:
         Graphics* glGraphics;

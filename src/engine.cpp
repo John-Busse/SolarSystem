@@ -62,6 +62,7 @@ void Engine::Run() {
     while(!glWindow->ShouldClose()) {
         glGraphics->Render(GetDT());
         glWindow->Swap();
+        glInput->InputStream();
         glfwPollEvents();
     }
 }
