@@ -28,12 +28,12 @@ void Input::KeyCallbackStatic(GLFWwindow* window, int key, int scancode, int act
     that->KeyCallback(window, key, scancode, action, mods);
 }
 
+//KeyCallback is useful for events that don't need to be constantly streamed
 void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     /*keybinds:
     number keys: select specific planet
     +- keys: adjust simulation speed
     space: reset angle*/
-
     
     // Number keys: select specific planet
     if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
