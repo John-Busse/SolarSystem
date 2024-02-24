@@ -12,7 +12,7 @@ Interface::Interface() {
             << "[R][F]:\tRotate camera up and down\n"
             << "[0-9]:\tSelect specific planet\n"
             << "[-][=]:\tAdjust simulation speed\n"
-            << "[Space]:\tReset viewing angle\n";
+            << "[Space]:\tReset viewing angle\n\n";
 }
 
 Interface::~Interface() {

@@ -40,7 +40,7 @@ using namespace std;
 
 #define numVAOs 1
 #define numVBOs 3	//number of vertex buffer objects (3D models used)
-#define numTex 13	//number of textures
+#define numObj 13	//number of objects
 
 struct Vertex {
 	glm::vec3 vertex;
@@ -51,6 +51,7 @@ struct Vertex {
 };
 
 struct Planet {
+	string planetName;
 	int numMoons;
 	float planetScale;
 	unsigned short int objIndex, texIndex, plaIndex;

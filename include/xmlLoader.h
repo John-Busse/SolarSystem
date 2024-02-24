@@ -11,6 +11,7 @@ Solar System Project
 class XMLLoader {
 	public:
 		XMLLoader();
+		XMLLoader(const char* fileName);
 		~XMLLoader();
 
 		int Init(const char* fileName);

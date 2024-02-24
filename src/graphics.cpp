@@ -10,9 +10,16 @@ Graphics::Graphics() {
 
 Graphics::Graphics(vector<Planet>& newPlanetInfo) {
     planetInfo = &newPlanetInfo;
-    timeScale = 0.1f;
+    timeScale = 0.01f;
     planetIndex = 0;
     updateRadius = true;
+
+    //unlitVert = const_cast<char*>("shaders/unlitVert.glsl");
+    //unlitFrag = const_cast<char*>("shaders/unlitFrag.glsl");
+    //bpVert = const_cast<char*>("shaders/blinnVert.glsl");
+    //bpVert = const_cast<char*>("shaders/blinnVert.glsl");
+    vert = const_cast<char*>("shaders/blinnVert.glsl");
+    frag = const_cast<char*>("shaders/blinnFrag.glsl");
 }
 
 Graphics::~Graphics() {
@@ -26,9 +33,22 @@ Graphics::~Graphics() {
     glTexture = NULL;
     delete glInterface;
     glInterface = NULL;
+
+    /*delete unlitVert;
+	unlitVert = NULL;
+	delete unlitFrag;
+	unlitVert = NULL;
+    delete bpVert;
+    bpVert = NULL;
+    delete bpFrag;
+    bpFrag = NULL;*/
+    delete vert;
+    vert = NULL;
+    delete frag;
+    frag = NULL;
 }
 
-bool Graphics::Init(int &width, int &height, char* vFile, char* fFile) { //char* infoFile
+bool Graphics::Init(int &width, int &height) { //char* infoFile
     //initialize glew
     GLenum err = glewInit();
     if (err != GLEW_OK) {
@@ -48,7 +68,7 @@ bool Graphics::Init(int &width, int &height, char* vFile, char* fFile) { //char*
 
     //Create object(s)
     try{
-        glObject = new Object(vao, vbo, ibo);
+        glObject = new Object(vao, vbo, ibo, nbo);
     }
     catch (string err) {
         cerr << err << endl;
@@ -66,7 +86,7 @@ bool Graphics::Init(int &width, int &height, char* vFile, char* fFile) { //char*
 
     //set up shaders
     try {
-        SetupShaders(vFile, fFile);
+        SetupShaders();
     } catch (string err) {
         cerr << err << endl;
         return false;
@@ -87,8 +107,7 @@ bool Graphics::Init(int &width, int &height, char* vFile, char* fFile) { //char*
     return true;
 }
 
-void Graphics::SetupShaders(char* vFile, char* fFile) {
-
+void Graphics::SetupShaders() {
     //set up 
     try {
     glShader = new Shader();
@@ -96,39 +115,19 @@ void Graphics::SetupShaders(char* vFile, char* fFile) {
         throw err;
     }
 
-    //Add shaders
-    if (!glShader->AddShader(GL_VERTEX_SHADER, vFile)) {
-        string err = "Vertex shader failed";
+    //Add blinn-phong shader
+    if (!glShader->AddShader(GL_VERTEX_SHADER, vert)) {
+        string err = "vertex shader failed";
         throw err;
     }
 
-    if (!glShader->AddShader(GL_FRAGMENT_SHADER, fFile)) {
-        string err = "Fragment shader failed";
+    if (!glShader->AddShader(GL_FRAGMENT_SHADER, frag)) {
+        string err = "fragment shader failed";
         throw err;
     }
 
-    //finalize Shader
     if (!glShader->Finalize()) {
-        string err = "Shader failed to finalize";
-        throw err;
-    }
-
-    //Locate matrices in shader programs
-    mLoc = glShader->GetUniformLoc("model_matrix");
-    if (mLoc == GL_INVALID_VALUE) {
-        string err = "model matrix not found in shader";
-        throw err;
-    }
-
-    vLoc = glShader->GetUniformLoc("view_matrix");
-    if (vLoc == GL_INVALID_VALUE) {
-        string err = "view matrix not found in shader";
-        throw err;
-    }
-
-    projLoc = glShader->GetUniformLoc("proj_matrix");
-    if (projLoc == GL_INVALID_VALUE) {
-        string err = "proj matrix not found in shader";
+        string err = "shader failed to initialize\n";
         throw err;
     }
 }
@@ -143,9 +142,9 @@ void Graphics::Render(float deltaTime) {
     glShader->Enable();
 
     //get uniform variables for MVP Matrices
-    mLoc = glShader->GetUniformLoc("model_matrix");
-    vLoc = glShader->GetUniformLoc("view_matrix");
+    mvLoc = glShader->GetUniformLoc("mv_matrix");
     projLoc = glShader->GetUniformLoc("proj_matrix");
+    nLoc = glShader->GetUniformLoc("norm_matrix");
 
     //build mvp matrices
     mStack.push(glm::mat4(1.0f));     //Push mat0: identity matrix
@@ -222,10 +221,18 @@ void Graphics::MatStack(int numMoons, float deltaTime) {
 }
 
 void Graphics::Draw(Planet thisPlanet) {
+    glShader->InstallLights(vMat, thisPlanet.texIndex);
+
+    //build the MV matrix
+    mvMat = vMat * mStack.top();
+
+    //build the inverse transpose of MV matrix, for normal transforms
+    invTraMat = glm::transpose(glm::inverse(mvMat));
+
     //load the MVP matrices into the shader
-    glUniformMatrix4fv(vLoc, 1, GL_FALSE, glm::value_ptr(vMat));
-    glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(mStack.top()));
+    glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+    glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTraMat));
     
     //load the vertices into the shader
     glBindBuffer(GL_ARRAY_BUFFER, vbo[thisPlanet.objIndex]);
@@ -236,6 +243,11 @@ void Graphics::Draw(Planet thisPlanet) {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,texture));
     glEnableVertexAttribArray(1);
 
+    //load the normals into the shader
+    glBindBuffer(GL_ARRAY_BUFFER, nbo[thisPlanet.objIndex]);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(2);
+
     //bind texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, glTexture->GetTexture(thisPlanet.texIndex));
@@ -244,31 +256,27 @@ void Graphics::Draw(Planet thisPlanet) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glGenerateMipmap(GL_TEXTURE_2D);
 
-/*
     //anisotropic filtering (if supported)
     if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
         GLfloat anisoSetting = 0.0f;
         glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoSetting);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting);        
     }
-*/
 
     glEnable(GL_LEQUAL);
     //glFrontFace(GL_CCW);
 
-    //load the indices into the element array buffer
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[thisPlanet.objIndex]);
-
+    //Draw the object
     glDrawElements(GL_TRIANGLES, glObject->GetFaces(thisPlanet.objIndex), GL_UNSIGNED_INT, 0);
 }
 
 void Graphics::ChangeSpeed(bool faster) {
-    timeScale += (faster ? 0.1f : -0.1f); //increment timescale
+    timeScale += (faster ? 0.01f : -0.01f); //increment timescale
 
     if (timeScale < 0.0f) { //if the timescale is less than 0.0, clamp it
         timeScale = 0.0f;
-    } else if (timeScale > 0.5f) {  //if the timescale is greater than 0.5, clamp it
-        timeScale = 0.5f;
+    } else if (timeScale > 0.2f) {  //if the timescale is greater than the max, clamp it
+        timeScale = 0.2f;
     }
 }
 

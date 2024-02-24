@@ -17,22 +17,29 @@ class Graphics {
         Graphics();
         Graphics(vector<Planet>& planetInfo);
         ~Graphics();
-        bool Init(int& w, int& h, char* v, char* f);
-        void SetupShaders(char* vFile, char* fFile);
+        bool Init(int& w, int& h);
         void Render(float deltaTime);
-        void MatStack(int numMoons, float deltaTime);
-
-        void Draw(Planet thisPlanet);
-        void ChangeSpeed(bool faster);
 
         //camera functions
-        void SetPlanet(int planet);
         void CameraMoveX(bool right);
         void CameraMoveY(bool up);
         void CameraMoveZ(bool in);
         void ResetAngle();
 
+        //simulation functions
+        void SetPlanet(int planet);
+        void ChangeSpeed(bool faster);
+
     private:
+        //Setup functions
+        void SetupShaders();
+        void FindLighting();
+
+        //Render functions
+        void MatStack(int numMoons, float deltaTime);
+        void Draw(Planet thisPlanet);
+
+        //Debug functions
         string ErrorString(GLenum*);
 
         Camera *glCamera;
@@ -46,13 +53,18 @@ class Graphics {
         vector<Planet>* planetInfo;
         int stackPos;
 
+        //shader variables
+        //char *unlitVert, *unlitFrag, *bpVert, *bpFrag;
+        char *vert, *frag;
+        GLuint projLoc, mvLoc, nLoc; //local mvp matrix vars
+        glm::mat4 pMat, vMat, mMat, mvMat, invTraMat;
+
         //render variables
         float timeScale;
-        GLuint projLoc, vLoc, mLoc; //local mvp matrix vars
-        glm::mat4 pMat, vMat, mMat, mvMat, oMat;
         GLuint vao[numVAOs];
         GLuint vbo[numVBOs];
         GLuint ibo[numVBOs];
+        GLuint nbo[numVBOs];
         GLuint thisTexture;
 
         //Camera variables

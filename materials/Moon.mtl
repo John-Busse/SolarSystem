@@ -1,0 +1,13 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl MoonMat
+Ns 85.983473
+Ka 0.327273 0.327273 0.327273
+Kd 0.428691 0.428690 0.428691
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Moon.jpg

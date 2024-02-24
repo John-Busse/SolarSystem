@@ -8,7 +8,7 @@ Object::Object() {
 
 }
 
-Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo) {
+Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
 	string err;
 	glGenVertexArrays(1, vao);
 	glBindVertexArray(vao[0]);
@@ -33,13 +33,14 @@ Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo) {
 		}
 
 		if (LoadOBJ(scene) == -1) {
-			err = "mesh has either no positions or no faces";
+			err = OBJFILES[i] + " has either no positions or no faces or no normals";
 			throw err;
 		}
 
 		//load the vertex and index info into the array buffers
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices[i].size(), &vertices[i][0], GL_STATIC_DRAW);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[i]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices[i].size(), &indices[i][0], GL_STATIC_DRAW);
 	}
@@ -56,8 +57,9 @@ int Object::LoadOBJ(const aiScene* scene) {
 	glm::vec3 tempVertex;
 	glm::vec2 tempUV;
 	vector<unsigned int> indBuffer;
+	vector<glm::vec3> normBuffer;
 
-	if (!mesh.HasPositions() || !mesh.HasFaces())
+	if (!mesh.HasPositions() || !mesh.HasFaces() || !mesh.HasNormals())
 		return -1;
 
 	//if we were using the material in the obj file, we'd pull that data here
@@ -68,6 +70,7 @@ int Object::LoadOBJ(const aiScene* scene) {
 
 		for (int j = 0; j < 3; j++) {
 			//enter the faces
+
 			indBuffer.push_back(face.mIndices[j]);
 
 			//enter the vertex/UV
@@ -75,10 +78,14 @@ int Object::LoadOBJ(const aiScene* scene) {
 			glm::vec2 thisUV = ConvertVec2(mesh.mTextureCoords[0][face.mIndices[j]]);
 			Vertex *temp = new Vertex(thisVertex, thisUV);
 			vertBuffer.push_back(*temp);
+
+			//enter the normals
+			normBuffer.push_back(ConvertVec3(mesh.mNormals[face.mIndices[j]]));
 		}
 	}
 	vertices.push_back(vertBuffer);
 	indices.push_back(indBuffer);
+	normals.push_back(normBuffer);
 
 	return 0;
 }

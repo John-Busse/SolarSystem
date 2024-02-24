@@ -7,7 +7,7 @@ Solar System Project
 
 Texture::Texture() {
 	//Load each texture in the TEXFILES array
-	for (int i = 0; i < numTex; i++) {
+	for (int i = 0; i < numObj; i++) {
 		if (!LoadTexture(TEXFILES[i].c_str(), i)) {
 			string err = "texture " + TEXFILES[i] + " not found";
 			throw err;

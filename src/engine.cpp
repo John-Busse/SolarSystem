@@ -12,9 +12,6 @@ Engine::Engine(string name, int width, int height) {
     wHeight = height;
     fullscreen = false;
     lastFrame = glfwGetTime();
-	
-	vertFile = const_cast<char*>("shaders/vert.glsl");
-	fragFile = const_cast<char*>("shaders/frag.glsl");
 }
 
 //fullscreen engine constructor
@@ -31,10 +28,6 @@ Engine::~Engine() {
 	glWindow = NULL;
 	delete glGraphics;
 	glGraphics = NULL;
-	delete vertFile;
-	vertFile = NULL;
-	delete fragFile;
-	fragFile = NULL;
 }
 
 bool Engine::Init(vector<Planet>& planetInfo) {
@@ -47,7 +40,7 @@ bool Engine::Init(vector<Planet>& planetInfo) {
 
     // start the graphics
     glGraphics = new Graphics(planetInfo);
-    if (!glGraphics->Init(wWidth, wHeight, vertFile, fragFile)) {
+    if (!glGraphics->Init(wWidth, wHeight)) {
         cerr << "The graphics failed to initialize" << endl;
         return false;
     }

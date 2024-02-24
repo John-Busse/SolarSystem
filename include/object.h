@@ -10,7 +10,7 @@ Solar System Project
 class Object {
     public:
         Object();
-        Object(GLuint* vao, GLuint* vbo, GLuint* ibo);
+        Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo);
         Object(char* fileName, int index);
         ~Object();
 
@@ -28,5 +28,6 @@ class Object {
         unsigned int  faces[1];
         vector<vector<Vertex>> vertices;
         vector<vector<unsigned int>> indices;
+        vector<vector<glm::vec3>> normals;
 };
 #endif

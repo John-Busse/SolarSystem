@@ -28,6 +28,10 @@ glm::vec3 Camera::GetCamPos() {
     return camPos;
 }
 
+glm::vec3 Camera::GetFocus() {
+    return focusPos;
+}
+
 glm::mat4 Camera::GetView() {
     return glm::lookAt( camPos,
                         focusPos,
@@ -69,10 +73,10 @@ void Camera::MoveY(bool up) {
     phi += direction;
 
     //handle overflow
-    if (phi < 0.0f)
-        phi = 0.0f;
+    if (phi < 1.0f)
+        phi = 1.0f;
     else if (phi > 180.0f)
-        phi = 180.0f;
+        phi = 179.0f;
 }
 
 //Zoom the camera in or out (z-axis) with W and S keys

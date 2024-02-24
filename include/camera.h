@@ -14,6 +14,7 @@ class Camera {
         ~Camera();
 
         glm::vec3 GetCamPos();
+        glm::vec3 GetFocus();
         glm::mat4 GetView();
         glm::mat4 GetProj();
 

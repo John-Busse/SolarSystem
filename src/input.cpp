@@ -73,16 +73,17 @@ void Input::InputStream() {
         glGraphics->CameraMoveZ(true);
     }
     // A D: Rotate camera left and right
-    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(glWindow->GetWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-        glGraphics->CameraMoveX(glfwGetKey(glWindow->GetWindow(), GLFW_KEY_D) == GLFW_PRESS);
+    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+        glGraphics->CameraMoveX(false);
+    }
+    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+        glGraphics->CameraMoveX(true);
     }
     // R F: Rotate camera up and down
-    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_R) == GLFW_PRESS || glfwGetKey(glWindow->GetWindow(), GLFW_KEY_F) == GLFW_PRESS) {
-        glGraphics->CameraMoveY(glfwGetKey(glWindow->GetWindow(), GLFW_KEY_F) == GLFW_PRESS);
+    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_R) == GLFW_PRESS) {
+        glGraphics->CameraMoveY(false);
     }
-/*
-    if (key == GLFW_KEY_R || key == GLFW_KEY_F) {
-        glGraphics->CameraMoveY(key == GLFW_KEY_F);
+    if (glfwGetKey(glWindow->GetWindow(), GLFW_KEY_F) == GLFW_PRESS) {
+        glGraphics->CameraMoveY(true);
     }
-    */
 }

@@ -9,6 +9,17 @@ XMLLoader::XMLLoader() {
 
 }
 
+XMLLoader::XMLLoader(const char* fileName) {
+	srand(static_cast <unsigned> (time(0)));
+	tinyxml2::XMLError error = configFile.LoadFile(fileName);
+	if(error == tinyxml2::XML_SUCCESS) {
+		throw "XML file loaded correctly!";
+	} else {
+		throw "error loading XML file " + string(fileName) + 
+		"\nerror type: " + configFile.ErrorIDToName(error);
+	}
+}
+
 XMLLoader::~XMLLoader() {
 
 }

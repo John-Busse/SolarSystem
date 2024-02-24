@@ -33,10 +33,6 @@ class Engine {
         int wHeight;
         bool fullscreen;
 
-        //shader variables
-        char* vertFile;
-        char* fragFile;
-
         //graphics variables
         Graphics *glGraphics;
         bool running;
