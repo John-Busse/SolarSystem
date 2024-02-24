@@ -7,22 +7,22 @@ This project is an effort in relearning OpenGL by remaking the first project fro
 ## Project plans
 #### XML file
 ~~Use XML file with basic planet information for the sun, 8 planets, and pluto.~~ COMPLETE 2/14/24\
-~~Add rings for Jupiter, Saturn, Uranus, and Neptune.~~ COMPLETE 2/14/24
+~~Add rings for Jupiter, Saturn, Uranus, and Neptune.~~ COMPLETE 2/14/24\
 Add Major moons of Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto.\
 Add consistent/accurate scale in planet size and distance.
 #### Objects
-~~.obj files for sphere, saturn ring, and smaller ring systems.~~ COMPLETE 2/14/
-~~.jpg texture files for sun, 8 planets, pluto, saturn rings, smaller rings, and moons.~~ COMPLETE 2/14/24
-~~.mtl files for sun, 8 planets, pluto, saturn rings, smaller rings, and moons.~~ COMPLETE 2/14/24
+~~.obj files for sphere, saturn ring, and smaller ring systems.~~ COMPLETE 2/14/24\
+~~.jpg texture files for sun, 8 planets, pluto, saturn rings, smaller rings, and moons.~~ COMPLETE 2/14/24\
+~~.mtl files for sun, 8 planets, pluto, saturn rings, smaller rings, and moons.~~ COMPLETE 2/14/24\
 normal maps for sun, 8 planets, pluto, saturn rings, smaller rings, and moons.
 #### Lighting/Shading
-~~basic unlit shading~~ COMPLETE 2/14/24
-~~blinn-phong reflection model~~ COMPLETE 2/23/24
-implement dynamic shadows
-normal map lighting
+~~basic unlit shading~~ COMPLETE 2/14/24\
+~~blinn-phong reflection model~~ COMPLETE 2/23/24\
+implement dynamic shadows\
+normal map lighting\
 add transparency to rings
 #### Background
-~~clear color for background~~ COMPLETE 2/14/24
+~~clear color for background~~ COMPLETE 2/14/24\
 add starry background
 #### Controls
 ~~zoom in and out (W S)~~ COMPLETE 2/14/24\
@@ -31,15 +31,15 @@ update zoom to scale with planet radius.\
 ~~rotate vertically (R F)~~ COMPLETE 2/14/24\
 ~~select specific planet (0-9)~~ COMPLETE 2/14/24\
 update planet selection to reset angle\
-~~reset viewing angle (spacebar) button implemented~~ COMPLETE 2/14/24
+~~reset viewing angle (spacebar) button implemented~~ COMPLETE 2/14/24\
 update reset angle to the camera facing the sunlit side of the planet
 #### User interface
 ~~Include console output showing control options.~~ COMPLETE 2/14/24\
 Add GUI to replace console output.\
 Add updating planet information to GUI:\
--Which planet is selected, current zoom distance, horizontal and vertical angles..
+-Which planet is selected, current zoom distance, horizontal and vertical angles.
 #### Camera/Window
-~~basic window at 800 x 600 resolution.~~
+~~basic window at 800 x 600 resolution.~~\
 update window to handle variable resolutions and fullscreen.
 
 # Dependencies, Building, and Running
