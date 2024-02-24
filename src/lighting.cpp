@@ -8,7 +8,7 @@ Lighting::Lighting() {
     //Assimp can't load .mtl files directly, so we have placeholder
     // .obj files to grab the material info
     //start assimp importer
-    print = true;
+    print = false;
 
     Assimp::Importer importer;
     aiColor3D colorVals;
@@ -18,7 +18,8 @@ Lighting::Lighting() {
         const aiScene* scene = importer.ReadFile(MTLFILES[i].c_str(), aiProcess_Triangulate);
 
         if (!scene) {
-            throw "importer.ReadFile(" + MTLFILES[i] + ") error: " + importer.GetErrorString();
+            string err = "importer.ReadFile(" + MTLFILES[i] + ") error: " + importer.GetErrorString();
+            throw err;
         }
 
         // grab the material

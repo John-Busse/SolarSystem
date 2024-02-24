@@ -13,10 +13,12 @@ XMLLoader::XMLLoader(const char* fileName) {
 	srand(static_cast <unsigned> (time(0)));
 	tinyxml2::XMLError error = configFile.LoadFile(fileName);
 	if(error == tinyxml2::XML_SUCCESS) {
-		throw "XML file loaded correctly!";
+		string err = "XML file loaded correctly!";
+		throw err;
 	} else {
-		throw "error loading XML file " + string(fileName) + 
+		string err = "error loading XML file " + string(fileName) + 
 		"\nerror type: " + configFile.ErrorIDToName(error);
+		throw err;
 	}
 }
 

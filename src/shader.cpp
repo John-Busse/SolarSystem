@@ -111,73 +111,78 @@ bool Shader::Finalize() {
 
 //Locate the matrices in the shader program
 void Shader::FindValues() {
+    string err;
     GLuint tester;
 
     tester = GetUniformLoc("mv_matrix");
     if (tester == GL_INVALID_VALUE) {
-        throw "model-view matrix not found in shader";
+        err = "model-view matrix not found in shader";
+        throw err;
     }
 
     tester = GetUniformLoc("proj_matrix");
     if (tester == GL_INVALID_VALUE) {
-        throw "proj matrix not found in shader";
+        err = "proj matrix not found in shader";
+        throw err;
     }
 
     tester = GetUniformLoc("norm_matrix");
     if (tester == GL_INVALID_VALUE) {
-        throw "normal matrix not found in shader";
+        err = "normal matrix not found in shader";
+        throw err;
     }
 
     globalAmbLoc = GetUniformLoc("globalAmbient");
     if (globalAmbLoc == GL_INVALID_VALUE) {
-        throw "global ambient vector not found in shader";
+        err = "global ambient vector not found in shader";
+        throw err;
     }
 
     ambLoc = GetUniformLoc("light.ambient");
     if (ambLoc == GL_INVALID_VALUE) {
-        string err = "positional ambient vector not found in shader";
+        err = "positional ambient vector not found in shader";
         throw err;
     }
 
     mDiffLoc = GetUniformLoc("light.diffuse");
     if (mDiffLoc == GL_INVALID_VALUE) {
-        string err = "positional diffuse vector not found in shader";
+        err = "positional diffuse vector not found in shader";
         throw err;
     }
 
     specLoc = GetUniformLoc("light.specular");
     if (specLoc == GL_INVALID_VALUE) {
-        string err = "positional specular vector not found in shader";
+        err = "positional specular vector not found in shader";
         throw err;
     }
 
     posLoc = GetUniformLoc("globalAmbient");
     if (posLoc == GL_INVALID_VALUE) {
-        string err = "positional vector not found in shader";
+        err = "positional vector not found in shader";
         throw err;
     }
 
     mAmbLoc = GetUniformLoc("material.ambient");
     if (mAmbLoc == GL_INVALID_VALUE) {
-        string err = "material ambient vector not found in shader";
+        err = "material ambient vector not found in shader";
         throw err;
     }
 
     mDiffLoc = GetUniformLoc("material.diffuse");
     if (mDiffLoc == GL_INVALID_VALUE) {
-        string err = "material diffuse vector not found in shader";
+        err = "material diffuse vector not found in shader";
         throw err;
     }
 
     mSpecLoc = GetUniformLoc("material.specular");
     if (mSpecLoc == GL_INVALID_VALUE) {
-        string err = "material specular vector not found in shader";
+        err = "material specular vector not found in shader";
         throw err;
     }
 
     mShiLoc = GetUniformLoc("material.shine");
     if (mShiLoc == GL_INVALID_VALUE) {
-        string err = "material shine value not found in shader";
+        err = "material shine value not found in shader";
         throw err;
     }
     }

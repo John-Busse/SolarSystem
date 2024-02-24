@@ -9,11 +9,11 @@ Object::Object() {
 }
 
 Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
-	string err;
 	glGenVertexArrays(1, vao);
 	glBindVertexArray(vao[0]);
 	glGenBuffers(numVBOs, vbo);
 	glGenBuffers(numVBOs, ibo);
+	glGenBuffers(numVBOs, nbo);
 
 	//start assimp importer
 	Assimp::Importer importer;
@@ -23,17 +23,17 @@ Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
 		const aiScene* scene = importer.ReadFile(OBJFILES[i].c_str(), aiProcess_Triangulate);
 
 		if (!scene) {
-			err = "importer.ReadFile(" + OBJFILES[i] + ") error: " + importer.GetErrorString();
+			string err = "importer.ReadFile(" + OBJFILES[i] + ") error: " + importer.GetErrorString();
 			throw err;
 		}
 
 		if (!scene->HasMeshes()) {
-			err = "scene " + OBJFILES[i] + " has no meshes";
+			string err = "scene " + OBJFILES[i] + " has no meshes";
 			throw err;
 		}
 
 		if (LoadOBJ(scene) == -1) {
-			err = OBJFILES[i] + " has either no positions or no faces or no normals";
+			string err = OBJFILES[i] + " has either no positions or no faces or no normals";
 			throw err;
 		}
 
@@ -43,6 +43,9 @@ Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[i]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices[i].size(), &indices[i][0], GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals[i].size(), &normals[i][0], GL_STATIC_DRAW);
 	}
 }
 

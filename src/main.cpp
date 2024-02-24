@@ -9,14 +9,7 @@ Solar System Project
 
 int main(void) {
     Magick::InitializeMagick(nullptr);
-    /*
-    try {
-        XMLLoader* textParser = new XMLLoader("../planetInfo.xml")
-    } catch (string err) {
-        cerr << err << endl;
-        return 1;
-    }
-    */
+
     XMLLoader* textParser = new XMLLoader();
     if (textParser->Init("../planetInfo.xml") == 1) {
         return 1;
