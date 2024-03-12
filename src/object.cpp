@@ -10,16 +10,16 @@ Object::Object() {
 
 Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
 	glGenVertexArrays(1, vao);
-	glBindVertexArray(vao[0]);
-	glGenBuffers(numVBOs, vbo);
-	glGenBuffers(numVBOs, ibo);
-	glGenBuffers(numVBOs, nbo);
+	glGenBuffers(numMesh, vbo);
+	glGenBuffers(numMesh, ibo);
+	glGenBuffers(numMesh, nbo);
 
 	//start assimp importer
 	Assimp::Importer importer;
 
 	//in this function, we're loading the objects into the buffers
-	for (int i = 0; i < numVBOs;  i++) {
+	for (int i = 0; i < numMesh;  i++) {
+		glBindVertexArray(vao[i]);
 		const aiScene* scene = importer.ReadFile(OBJFILES[i].c_str(), aiProcess_Triangulate);
 
 		if (!scene) {
@@ -36,7 +36,7 @@ Object::Object(GLuint* vao, GLuint* vbo, GLuint* ibo, GLuint* nbo) {
 			string err = OBJFILES[i] + " has either no positions or no faces or no normals";
 			throw err;
 		}
-
+		
 		//load the vertex and index info into the array buffers
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices[i].size(), &vertices[i][0], GL_STATIC_DRAW);

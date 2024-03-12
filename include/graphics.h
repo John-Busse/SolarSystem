@@ -61,10 +61,10 @@ class Graphics {
 
         //render variables
         float timeScale;
-        GLuint vao[numVAOs];
-        GLuint vbo[numVBOs];
-        GLuint ibo[numVBOs];
-        GLuint nbo[numVBOs];
+        GLuint vao[numMesh];
+        GLuint vbo[numMesh];
+        GLuint ibo[numMesh];
+        GLuint nbo[numMesh];
         GLuint thisTexture;
 
         //Camera variables

@@ -38,8 +38,7 @@ Solar System Project
 
 using namespace std;
 
-#define numVAOs 1
-#define numVBOs 3	//number of vertex buffer objects (3D models used)
+#define numMesh 3	//number of meshes (3D models used)
 #define numObj 13	//number of objects
 
 struct Vertex {
@@ -59,7 +58,6 @@ struct Planet {
 	float orbitDistance, orbitSpeed, orbitTilt, orbitAngle;
 	// rotation info
 	float rotateSpeed, rotateAngle;
-	//glm::vec3 rotAxis;
 };
 
 #endif

@@ -34,14 +34,6 @@ Graphics::~Graphics() {
     delete glInterface;
     glInterface = NULL;
 
-    /*delete unlitVert;
-	unlitVert = NULL;
-	delete unlitFrag;
-	unlitVert = NULL;
-    delete bpVert;
-    bpVert = NULL;
-    delete bpFrag;
-    bpFrag = NULL;*/
     delete vert;
     vert = NULL;
     delete frag;
@@ -55,9 +47,6 @@ bool Graphics::Init(int &width, int &height) { //char* infoFile
         cerr << "glew failed to initialize: " << glewGetErrorString(err) << endl;
         return false;
     }
-
-    glGenVertexArrays(1, vao);
-    glBindVertexArray(vao[0]);
 
     try {
         glCamera = new Camera(width, height);
@@ -233,6 +222,9 @@ void Graphics::Draw(Planet thisPlanet) {
     glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
     glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTraMat));
+
+    //bind the VAO
+    glBindVertexArray(vao[thisPlanet.objIndex]);
     
     //load the vertices into the shader
     glBindBuffer(GL_ARRAY_BUFFER, vbo[thisPlanet.objIndex]);
@@ -268,6 +260,10 @@ void Graphics::Draw(Planet thisPlanet) {
 
     //Draw the object
     glDrawElements(GL_TRIANGLES, glObject->GetFaces(thisPlanet.objIndex), GL_UNSIGNED_INT, 0);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 }
 
 void Graphics::ChangeSpeed(bool faster) {

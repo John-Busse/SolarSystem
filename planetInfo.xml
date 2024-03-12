@@ -7,7 +7,7 @@
 		<OrbitSpeed>0.0</OrbitSpeed> 		<!--How fast it orbits-->
 		<OrbitTilt>0</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
 		<!--Rotation refers to the planets spin about its own axis-->
-		<RotationSpeed>27.0</RotationSpeed>	<!--How fast it rotates-->
+		<RotationSpeed>2.7</RotationSpeed>	<!--How fast it rotates-->
 		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
 		<TextureIndex>0</TextureIndex>		<!--Which texture represents this object-->
 		<PlanetScale>20</PlanetScale>		<!--How big the planet is-->
@@ -20,7 +20,7 @@
 		<OrbitSpeed>4.15</OrbitSpeed> 		<!--How fast it orbits-->
 		<OrbitTilt>3.38</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
 		<!--Rotation refers to the planets spin about its own axis-->
-		<RotationSpeed>176.0</RotationSpeed>	<!--How fast it rotates-->
+		<RotationSpeed>8</RotationSpeed>	<!--How fast it rotates-->
 		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
 		<TextureIndex>1</TextureIndex>		<!--Which texture represents this object-->
 		<PlanetScale>0.38</PlanetScale>		<!--How big the planet is-->
@@ -33,7 +33,7 @@
 		<OrbitSpeed>1.62</OrbitSpeed> 		<!--How fast it orbits-->
 		<OrbitTilt>3.86</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
 		<!--Rotation refers to the planets spin about its own axis-->
-		<RotationSpeed>243</RotationSpeed>	<!--How fast it rotates-->
+		<RotationSpeed>5</RotationSpeed>	<!--How fast it rotates-->
 		<ObjectIndex>0</ObjectIndex>		<!--Which .obj represents this planet-->
 		<TextureIndex>2</TextureIndex>		<!--Which texture represents this object-->
 		<PlanetScale>0.95</PlanetScale>		<!--How big the planet is-->
@@ -83,7 +83,7 @@
 		<!--Orbit is handled in the translate function-->
 		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
 		<OrbitSpeed>0</OrbitSpeed> 		<!--How fast it orbits-->
-		<OrbitTilt>3.13</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<OrbitTilt>0</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
 		<!--Rotation refers to the planets spin about its own axis-->
 		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
 		<ObjectIndex>2</ObjectIndex>		<!--Which .obj represents this planet-->
@@ -108,7 +108,7 @@
 		<!--Orbit is handled in the translate function-->
 		<OrbitDistance>0</OrbitDistance>	<!--Distance from its parent-->
 		<OrbitSpeed>0</OrbitSpeed> 		<!--How fast it orbits-->
-		<OrbitTilt>26.7</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
+		<OrbitTilt>0</OrbitTilt>			<!--What angle (in degrees) does it orbit at?-->
 		<!--Rotation refers to the planets spin about its own axis-->
 		<RotationSpeed>0</RotationSpeed>	<!--How fast it rotates-->
 		<ObjectIndex>1</ObjectIndex>		<!--Which .obj represents this planet-->
