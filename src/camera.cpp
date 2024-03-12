@@ -91,5 +91,17 @@ void Camera::MoveZ(bool in) {
 
 void Camera::ResetAngle() {
     theta = 270.0f;
-    phi = 70.0f;
+    phi = 90.0f;
+}
+
+//Reset the camera angle so the camera is facing 
+//the sunlit side of the planet
+void Camera::ResetAngle(glm::vec3 planetLoc) {
+    //Since the sun is at (0,0,0), negating the vector lets us
+    // get the vector from the sun to the planet for direction
+    glm::vec3 view = glm::normalize(-planetLoc);
+
+    theta = atan2(view.z,view.x) * (180.0f / M_PI);
+    phi = (acos(view.y / 1.0f) * (180.0f / M_PI)) - 30.0f;
+    //the - 20.0f is used to add some perspective
 }

@@ -12,7 +12,7 @@ Graphics::Graphics(vector<Planet>& newPlanetInfo) {
     planetInfo = &newPlanetInfo;
     timeScale = 0.01f;
     planetIndex = 0;
-    updateRadius = true;
+    updateCamera = true;
 
     //unlitVert = const_cast<char*>("shaders/unlitVert.glsl");
     //unlitFrag = const_cast<char*>("shaders/unlitFrag.glsl");
@@ -176,9 +176,17 @@ void Graphics::MatStack(int numMoons, float deltaTime) {
         if (thisPlanet.texIndex == planetIndex) {
             // the third column of the matrix holds position information
             glCamera->SetPos(mStack.top()[3]);
-            if (updateRadius) {
+            if (updateCamera) {
                 glCamera->SetRadius(thisPlanet.planetScale);
-                updateRadius = false;
+                if (planetIndex == 0) {
+                    //Reset to the default
+                    glCamera->ResetAngle();
+                } else {
+                    //Overloaded reset angle sets the camera
+                    // to face the sunlit side of the planet
+                    glCamera->ResetAngle(mStack.top()[3]);
+                }
+                updateCamera = false;
             }
         }
 
@@ -278,7 +286,7 @@ void Graphics::ChangeSpeed(bool faster) {
 
 void Graphics::SetPlanet(int index) {
     planetIndex = index;
-    updateRadius = true;
+    updateCamera = true;
 }
 
 void Graphics::CameraMoveX(bool right){

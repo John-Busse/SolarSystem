@@ -26,6 +26,7 @@ class Camera {
         void MoveY(bool up);
         void MoveZ(bool in);
         void ResetAngle();
+        void ResetAngle(glm::vec3 planetLoc);
 
     private:
         glm::vec3 camPos;

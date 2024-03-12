@@ -26,13 +26,13 @@ add transparency to rings
 add starry background
 #### Controls
 ~~zoom in and out (W S)~~ COMPLETE 2/14/24\
-update zoom to scale with planet radius.\
+update zoom to scale with planet radius\
 ~~rotate horizontally (A D)~~ COMPLETE 2/14/24\
 ~~rotate vertically (R F)~~ COMPLETE 2/14/24\
 ~~select specific planet (0-9)~~ COMPLETE 2/14/24\
-update planet selection to reset angle\
+~~update planet selection to reset angle~~ COMPLETE 3/11/24\
 ~~reset viewing angle (spacebar) button implemented~~ COMPLETE 2/14/24\
-update reset angle to the camera facing the sunlit side of the planet
+~~update reset angle to the camera facing the sunlit side of the planet~~ COMPLETE 3/11/24
 #### User interface
 ~~Include console output showing control options.~~ COMPLETE 2/14/24\
 Add GUI to replace console output.\

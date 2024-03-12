@@ -69,6 +69,6 @@ class Graphics {
 
         //Camera variables
         int planetIndex;
-        bool updateRadius;
+        bool updateCamera;
 };
 #endif
