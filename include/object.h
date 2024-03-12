@@ -17,10 +17,12 @@ class Object {
         float* GetVertices();
         int GetFaces(int id);
         int LoadOBJ(const aiScene* scene);
+
+    private:
+        //helper functions
         glm::vec3 ConvertVec3(aiVector3D inVec);
         glm::vec2 ConvertVec2(aiVector3D inVec);
 
-    private:
         const string OBJFILES[3] = 
         {"../models/sphere.obj", 
         "../models/SaturnRing.obj", 

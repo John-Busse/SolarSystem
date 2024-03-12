@@ -47,9 +47,8 @@ class Shader {
          mAmbLoc, mDiffLoc, mSpecLoc, mShiLoc;
 
         //lighting variables
-        glm::vec3 currentPosition, initialLightPos = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 lightPosV, initialLightLoc = glm::vec3(0.0f, 0.0f, 0.0f);
         float lightPos[3];
-        glm::vec3 lightPosV;
 
         //white light properties
         float globalAmbient[4] = {0.7f, 0.7f, 0.7f, 1.0f};

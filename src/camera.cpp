@@ -10,7 +10,7 @@ Camera::Camera() {
 Camera::Camera(int& width, int& height) {
     radius = 5.0f;      // max radius: 50 units
     theta = 270.0f;     //  0-360 degrees
-    phi = 70.0f;        // 0-180 degrees
+    phi = 90.0f;        // 0-180 degrees
     camPos = glm::vec3(-0.0f, -0.0f, -50.0f);   //Where the camera is
     focusPos = glm::vec3(0.0f, 0.0f, 0.0f);     //Shift down Y to reveal perspective
 
@@ -59,7 +59,7 @@ void Camera::MoveX(bool right){
     float direction = 1.0f * (right ? 1.0f: -1.0f);
     theta += direction;
 
-    //handle overflow
+    //clamp to handle overflow
     if (theta < 0.0f)
         theta += 360.0f;
     else if (theta > 360.0f)
@@ -72,7 +72,7 @@ void Camera::MoveY(bool up) {
     float direction = 0.5f * (up ? 1.0f : -1.0f);
     phi += direction;
 
-    //handle overflow
+    //clamp to handle overflow
     if (phi < 1.0f)
         phi = 1.0f;
     else if (phi > 180.0f)
@@ -83,6 +83,10 @@ void Camera::MoveY(bool up) {
 void Camera::MoveZ(bool in) {
     float direction = 0.1f * (in ? 1.0f : -1.0f);
     radius += direction;
+
+    //clamp to prevent view flipping from zooming too close
+    if (radius < 0.1f)
+        radius = 0.1f;
 }
 
 void Camera::ResetAngle() {

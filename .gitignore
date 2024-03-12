@@ -1,1 +1,8 @@
 build/
+.vscode/
+.vscode/settings.json
+ch4planets.xml
+ch5planets.xml
+config.xml
+planetInfoExpanded.xml
+.vscode/settings.json

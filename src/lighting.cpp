@@ -8,8 +8,6 @@ Lighting::Lighting() {
     //Assimp can't load .mtl files directly, so we have placeholder
     // .obj files to grab the material info
     //start assimp importer
-    print = false;
-
     Assimp::Importer importer;
     aiColor3D colorVals;
     float opacity;
@@ -56,12 +54,6 @@ Lighting::~Lighting() {
 }
 
 float* Lighting::GetAmbient(int mtlIndex) {
-    if (print) {
-        cout    << materials[mtlIndex].ambient[0] << ", "
-                << materials[mtlIndex].ambient[1] << ", "
-                << materials[mtlIndex].ambient[2] << ", "
-                << materials[mtlIndex].ambient[3] << endl;
-    }
     return materials[mtlIndex].ambient;
 }
 
@@ -71,12 +63,6 @@ float* Lighting::GetAmbient() {
 }
 
 float* Lighting::GetDiffuse(int mtlIndex) {
-    if (print) {
-        cout    << materials[mtlIndex].diffuse[0] << ", "
-                << materials[mtlIndex].diffuse[1] << ", "
-                << materials[mtlIndex].diffuse[2] << ", "
-                << materials[mtlIndex].diffuse[3] << endl;
-    }
     return materials[mtlIndex].diffuse;
 }
 
@@ -86,12 +72,6 @@ float* Lighting::GetDiffuse() {
 }
 
 float* Lighting::GetSpecular(int mtlIndex) {
-    if (print) {
-        cout    << materials[mtlIndex].specular[0] << ", "
-                << materials[mtlIndex].specular[1] << ", "
-                << materials[mtlIndex].specular[2] << ", "
-                << materials[mtlIndex].specular[3] << endl;
-    }
     return materials[mtlIndex].specular;
 }
 
@@ -101,11 +81,6 @@ float* Lighting::GetSpecular() {
 }
 
 float Lighting::GetShine(int mtlIndex) {
-    if (print) {
-        cout << "shine is " << materials[mtlIndex].shine << endl;
-        cout << "index is " << mtlIndex << endl << endl;
-        print = !(mtlIndex == 9);
-    }
     return materials[mtlIndex].shine;
 }
 

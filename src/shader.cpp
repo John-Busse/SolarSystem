@@ -144,8 +144,8 @@ void Shader::FindValues() {
         throw err;
     }
 
-    mDiffLoc = GetUniformLoc("light.diffuse");
-    if (mDiffLoc == GL_INVALID_VALUE) {
+    diffLoc = GetUniformLoc("light.diffuse");
+    if (diffLoc == GL_INVALID_VALUE) {
         err = "positional diffuse vector not found in shader";
         throw err;
     }
@@ -156,7 +156,7 @@ void Shader::FindValues() {
         throw err;
     }
 
-    posLoc = GetUniformLoc("globalAmbient");
+    posLoc = GetUniformLoc("light.position");
     if (posLoc == GL_INVALID_VALUE) {
         err = "positional vector not found in shader";
         throw err;
@@ -185,7 +185,7 @@ void Shader::FindValues() {
         err = "material shine value not found in shader";
         throw err;
     }
-    }
+}
 
 
 string Shader::ReadShaderSource(const char *filePath) {
@@ -268,7 +268,7 @@ bool Shader::CheckOpenGLError() {
 }
 
 void Shader::InstallLights(glm::mat4 vMatrix, int matIndex) {
-    lightPosV = glm::vec3(vMatrix * glm::vec4(initialLightPos, 1.0f));
+    lightPosV = glm::vec3(vMatrix * glm::vec4(initialLightLoc, 1.0f));
     lightPos[0] = lightPosV.x;
     lightPos[1] = lightPosV.y;
     lightPos[2] = lightPosV.z;

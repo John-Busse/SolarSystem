@@ -22,10 +22,11 @@ class Engine {
         void Display(double currentTime);
         void WindowReshapeCallback(int, int);
 
+    private:
+        //time functions
         float GetDT();
         long long GetTime();
 
-    private:
         //window variables
         Window *glWindow;
         string wName;

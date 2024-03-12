@@ -26,7 +26,6 @@ class Lighting {
 		float GetShine();
 
     private:
-		bool print;
 		Material materials[numObj];
         const string MTLFILES[numObj] = {
 			"../materials/Sun.obj", 	    //0
