@@ -24,7 +24,7 @@ class Camera {
         void SetRadius(float planetScale);
         void MoveX(bool right);
         void MoveY(bool up);
-        void MoveZ(bool in);
+        void MoveZ(bool in, float scale);
         void ResetAngle();
         void ResetAngle(glm::vec3 planetLoc);
 

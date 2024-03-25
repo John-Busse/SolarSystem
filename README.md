@@ -26,7 +26,7 @@ add transparency to rings
 add starry background
 #### Controls
 ~~zoom in and out (W S)~~ COMPLETE 2/14/24\
-update zoom to scale with planet radius\
+~~update zoom to scale with planet radius~~ COMPLETE 3/25/24\
 ~~rotate horizontally (A D)~~ COMPLETE 2/14/24\
 ~~rotate vertically (R F)~~ COMPLETE 2/14/24\
 ~~select specific planet (0-9)~~ COMPLETE 2/14/24\

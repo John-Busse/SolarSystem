@@ -174,6 +174,7 @@ void Graphics::MatStack(int numMoons, float deltaTime) {
 
         //move camera to current planet
         if (thisPlanet.texIndex == planetIndex) {
+            planetScale = thisPlanet.planetScale;
             // the third column of the matrix holds position information
             glCamera->SetPos(mStack.top()[3]);
             if (updateCamera) {
@@ -298,7 +299,7 @@ void Graphics::CameraMoveY(bool up) {
 }
 
 void Graphics::CameraMoveZ(bool in) {
-    glCamera->MoveZ(in);
+    glCamera->MoveZ(in, planetScale);
 }
 
 void Graphics::ResetAngle() {

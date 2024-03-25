@@ -70,5 +70,6 @@ class Graphics {
         //Camera variables
         int planetIndex;
         bool updateCamera;
+        float planetScale;
 };
 #endif

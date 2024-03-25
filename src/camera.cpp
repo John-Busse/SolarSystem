@@ -79,14 +79,15 @@ void Camera::MoveY(bool up) {
         phi = 179.0f;
 }
 
-//Zoom the camera in or out (z-axis) with W and S keys
-void Camera::MoveZ(bool in) {
-    float direction = 0.1f * (in ? 1.0f : -1.0f);
+
+//Zoom camera in or out (z-axis) with W and S keys
+// now scales based on planet scale
+void Camera::MoveZ(bool in, float scale) {
+    float direction = 0.1f * (in ? 1.0f : -1.0f) * scale;
     radius += direction;
 
-    //clamp to prevent view flipping from zooming too close
-    if (radius < 0.1f)
-        radius = 0.1f;
+    if (radius < 1.5f * scale)
+        radius = 1.5f * scale;
 }
 
 void Camera::ResetAngle() {
