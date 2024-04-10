@@ -11,6 +11,7 @@ Solar System Project
 #include "object.h"
 #include "texture.h"
 #include "interface.h"
+#include "lighting.h"
 
 class Graphics {
     public:
@@ -31,13 +32,9 @@ class Graphics {
         void ChangeSpeed(bool faster);
 
     private:
-        //Setup functions
-        void SetupShaders();
-        void FindLighting();
-
         //Render functions
         void MatStack(int numMoons, float deltaTime);
-        void Draw(Planet thisPlanet);
+        void Draw();
 
         //Debug functions
         string ErrorString(GLenum*);
@@ -47,9 +44,11 @@ class Graphics {
         Object *glObject;
         Texture *glTexture;
         Interface *glInterface;
+        Lighting *glLighting;
 
         //matrix stack
         stack<glm::mat4> mStack;
+        vector<glm::mat4> modelVec;
         vector<Planet>* planetInfo;
         int stackPos;
 

@@ -13,11 +13,8 @@ Graphics::Graphics(vector<Planet>& newPlanetInfo) {
     timeScale = 0.01f;
     planetIndex = 0;
     updateCamera = true;
+    modelVec.resize(planetInfo->size());
 
-    //unlitVert = const_cast<char*>("shaders/unlitVert.glsl");
-    //unlitFrag = const_cast<char*>("shaders/unlitFrag.glsl");
-    //bpVert = const_cast<char*>("shaders/blinnVert.glsl");
-    //bpVert = const_cast<char*>("shaders/blinnVert.glsl");
     vert = const_cast<char*>("shaders/blinnVert.glsl");
     frag = const_cast<char*>("shaders/blinnFrag.glsl");
 }
@@ -33,6 +30,8 @@ Graphics::~Graphics() {
     glTexture = NULL;
     delete glInterface;
     glInterface = NULL;
+    delete glLighting;
+    glLighting = NULL;
 
     delete vert;
     vert = NULL;
@@ -75,7 +74,14 @@ bool Graphics::Init(int &width, int &height) { //char* infoFile
 
     //set up shaders
     try {
-        SetupShaders();
+        glShader = new Shader(vert, frag);
+    } catch (string err) {
+        cerr << err << endl;
+        return false;
+    }
+
+    try {
+        glLighting = new Lighting();
     } catch (string err) {
         cerr << err << endl;
         return false;
@@ -96,44 +102,12 @@ bool Graphics::Init(int &width, int &height) { //char* infoFile
     return true;
 }
 
-void Graphics::SetupShaders() {
-    //set up 
-    try {
-    glShader = new Shader();
-    } catch (string err) {
-        throw err;
-    }
-
-    //Add blinn-phong shader
-    if (!glShader->AddShader(GL_VERTEX_SHADER, vert)) {
-        string err = "vertex shader failed";
-        throw err;
-    }
-
-    if (!glShader->AddShader(GL_FRAGMENT_SHADER, frag)) {
-        string err = "fragment shader failed";
-        throw err;
-    }
-
-    if (!glShader->Finalize()) {
-        string err = "shader failed to initialize\n";
-        throw err;
-    }
-}
 
 void Graphics::Render(float deltaTime) {
     //clear the screen
     glClearColor(0.01f, 0.01f, 0.01f, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_CULL_FACE); //back face culling
-
-    //start the shader
-    glShader->Enable();
-
-    //get uniform variables for MVP Matrices
-    mvLoc = glShader->GetUniformLoc("mv_matrix");
-    projLoc = glShader->GetUniformLoc("proj_matrix");
-    nLoc = glShader->GetUniformLoc("norm_matrix");
 
     //build mvp matrices
     mStack.push(glm::mat4(1.0f));     //Push mat0: identity matrix
@@ -147,6 +121,8 @@ void Graphics::Render(float deltaTime) {
     while(!mStack.empty()) {
         mStack.pop();
     }
+
+    Draw();
 }
 
 void Graphics::MatStack(int numMoons, float deltaTime) {
@@ -202,7 +178,8 @@ void Graphics::MatStack(int numMoons, float deltaTime) {
         //set scale
         mStack.top() *= glm::scale(glm::mat4(1.0f), glm::vec3(thisPlanet.planetScale, thisPlanet.planetScale, thisPlanet.planetScale));
 
-        Draw(thisPlanet);
+        //Draw(thisPlanet);
+        modelVec[stackPos] = mStack.top();
         
         mStack.pop();   //pop the rotation/scale matrix
 
@@ -218,61 +195,73 @@ void Graphics::MatStack(int numMoons, float deltaTime) {
     }
 }
 
-void Graphics::Draw(Planet thisPlanet) {
-    glShader->InstallLights(vMat, thisPlanet.texIndex);
+void Graphics::Draw() {
+    //start the shader
+    glShader->Enable();
 
-    //build the MV matrix
-    mvMat = vMat * mStack.top();
+    //get uniform variables for MVP Matrices
+    mvLoc = glShader->GetUniformLoc("mv_matrix");
+    projLoc = glShader->GetUniformLoc("proj_matrix");
+    nLoc = glShader->GetUniformLoc("norm_matrix");
 
-    //build the inverse transpose of MV matrix, for normal transforms
-    invTraMat = glm::transpose(glm::inverse(mvMat));
+    for (int i = 0; i < modelVec.size(); i++) {
+        Planet thisPlanet = (*planetInfo)[i];
 
-    //load the MVP matrices into the shader
-    glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
-    glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTraMat));
+        glLighting->InstallLights(vMat, thisPlanet.texIndex, glShader);
 
-    //bind the VAO
-    glBindVertexArray(vao[thisPlanet.objIndex]);
-    
-    //load the vertices into the shader
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[thisPlanet.objIndex]);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-    glEnableVertexAttribArray(0);
+        //build the MV matrix
+        mvMat = vMat * modelVec[i];
 
-    //load the uvs into the shader
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,texture));
-    glEnableVertexAttribArray(1);
+        //build the inverse transpose of MV matrix, for normal transforms
+        invTraMat = glm::transpose(glm::inverse(mvMat));
 
-    //load the normals into the shader
-    glBindBuffer(GL_ARRAY_BUFFER, nbo[thisPlanet.objIndex]);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(2);
+        //load the MVP matrices into the shader
+        glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+        glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTraMat));
 
-    //bind texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, glTexture->GetTexture(thisPlanet.texIndex));
+        //bind the VAO
+        glBindVertexArray(vao[thisPlanet.objIndex]);
+        
+        //load the vertices into the shader
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[thisPlanet.objIndex]);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+        glEnableVertexAttribArray(0);
 
-    //mipmapping/antialiasing
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_2D);
+        //load the uvs into the shader
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,texture));
+        glEnableVertexAttribArray(1);
 
-    //anisotropic filtering (if supported)
-    if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
-        GLfloat anisoSetting = 0.0f;
-        glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoSetting);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting);        
+        //load the normals into the shader
+        glBindBuffer(GL_ARRAY_BUFFER, nbo[thisPlanet.objIndex]);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(2);
+
+        //bind texture
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, glTexture->GetTexture(thisPlanet.texIndex));
+
+        //mipmapping/antialiasing
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        //anisotropic filtering (if supported)
+        if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
+            GLfloat anisoSetting = 0.0f;
+            glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoSetting);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting);        
+        }
+
+        glEnable(GL_LEQUAL);
+        //glFrontFace(GL_CCW);
+
+        //Draw the object
+        glDrawElements(GL_TRIANGLES, glObject->GetFaces(thisPlanet.objIndex), GL_UNSIGNED_INT, 0);
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
     }
-
-    glEnable(GL_LEQUAL);
-    //glFrontFace(GL_CCW);
-
-    //Draw the object
-    glDrawElements(GL_TRIANGLES, glObject->GetFaces(thisPlanet.objIndex), GL_UNSIGNED_INT, 0);
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
 }
 
 void Graphics::ChangeSpeed(bool faster) {

@@ -87,3 +87,32 @@ float Lighting::GetShine(int mtlIndex) {
 float Lighting::GetShine() { 
     return 51.2f; 
 }
+
+void Lighting::InstallLights(glm::mat4 vMatrix, int matIndex, Shader *thisShader) {
+    lightPosV = glm::vec3(vMatrix * glm::vec4(lightLoc, 1.0f));
+    lightPos[0] = lightPosV.x;
+    lightPos[1] = lightPosV.y;
+    lightPos[2] = lightPosV.z;
+    
+    //get light/material field locations in the shader
+    globalAmbLoc = thisShader->GetUniformLoc("globalAmbient");
+    ambLoc = thisShader->GetUniformLoc("light.ambient");
+    diffLoc = thisShader->GetUniformLoc("light.diffuse");
+    specLoc = thisShader->GetUniformLoc("light.specular");
+    posLoc = thisShader->GetUniformLoc("light.position");
+    mAmbLoc = thisShader->GetUniformLoc("material.ambient");
+    mDiffLoc = thisShader->GetUniformLoc("material.diffuse");
+    mSpecLoc = thisShader->GetUniformLoc("material.specular");
+    mShiLoc = thisShader->GetUniformLoc("material.shine");
+
+    //Set uniform light/material values in shader
+    thisShader->SetProg4fv(globalAmbLoc, globalAmbient);
+    thisShader->SetProg4fv(ambLoc, lightAmbient);
+    thisShader->SetProg4fv(diffLoc, lightDiffuse);
+    thisShader->SetProg4fv(specLoc, lightSpecular);
+    thisShader->SetProg3fv(posLoc, lightPos);
+    thisShader->SetProg4fv(mAmbLoc, GetAmbient(matIndex));
+    thisShader->SetProg4fv(mDiffLoc, GetDiffuse(matIndex));
+    thisShader->SetProg4fv(mSpecLoc, GetSpecular(matIndex));
+    thisShader->SetProg1f(mShiLoc, GetShine(matIndex));
+}

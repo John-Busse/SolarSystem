@@ -11,11 +11,28 @@ Shader::Shader() {
         string err = "Error creating shader program";
         throw err;
     }
+}
 
-    // load the material data
-    try {
-        glLighting = new Lighting();
-    } catch (string err) {
+Shader::Shader(const char* vertFile, const char* fragFile) {
+    shaderProg = glCreateProgram();
+
+    if (shaderProg == 0) {
+        string err = "Error creating shader program";
+        throw err;
+    }
+    
+    if (!AddShader(GL_VERTEX_SHADER, vertFile)) {
+        string err = "vertex shader failed";
+        throw err;
+    }
+
+    if (!AddShader(GL_FRAGMENT_SHADER, fragFile)) {
+        string err = "fragment shader failed";
+        throw err;
+    }
+
+    if (!Finalize()) {
+        string err = "shader failed to initialize";
         throw err;
     }
 }
@@ -67,7 +84,7 @@ bool Shader::AddShader(GLenum shaderType, const char* filename) {
         cerr << "shader compilation failure of " << filename << endl;
         PrintShaderLog(&shaderObj);
     }
-
+    
     glAttachShader(shaderProg, shaderObj);
 
     return true;
@@ -99,94 +116,8 @@ bool Shader::Finalize() {
         glDeleteShader(*it);
     }
 
-    try {
-        FindValues();
-    } catch (string err) {
-        cerr << err << endl;
-        return false;
-    }
-
     return true;
 }
-
-//Locate the matrices in the shader program
-void Shader::FindValues() {
-    string err;
-    GLuint tester;
-
-    tester = GetUniformLoc("mv_matrix");
-    if (tester == GL_INVALID_VALUE) {
-        err = "model-view matrix not found in shader";
-        throw err;
-    }
-
-    tester = GetUniformLoc("proj_matrix");
-    if (tester == GL_INVALID_VALUE) {
-        err = "proj matrix not found in shader";
-        throw err;
-    }
-
-    tester = GetUniformLoc("norm_matrix");
-    if (tester == GL_INVALID_VALUE) {
-        err = "normal matrix not found in shader";
-        throw err;
-    }
-
-    globalAmbLoc = GetUniformLoc("globalAmbient");
-    if (globalAmbLoc == GL_INVALID_VALUE) {
-        err = "global ambient vector not found in shader";
-        throw err;
-    }
-
-    ambLoc = GetUniformLoc("light.ambient");
-    if (ambLoc == GL_INVALID_VALUE) {
-        err = "positional ambient vector not found in shader";
-        throw err;
-    }
-
-    diffLoc = GetUniformLoc("light.diffuse");
-    if (diffLoc == GL_INVALID_VALUE) {
-        err = "positional diffuse vector not found in shader";
-        throw err;
-    }
-
-    specLoc = GetUniformLoc("light.specular");
-    if (specLoc == GL_INVALID_VALUE) {
-        err = "positional specular vector not found in shader";
-        throw err;
-    }
-
-    posLoc = GetUniformLoc("light.position");
-    if (posLoc == GL_INVALID_VALUE) {
-        err = "positional vector not found in shader";
-        throw err;
-    }
-
-    mAmbLoc = GetUniformLoc("material.ambient");
-    if (mAmbLoc == GL_INVALID_VALUE) {
-        err = "material ambient vector not found in shader";
-        throw err;
-    }
-
-    mDiffLoc = GetUniformLoc("material.diffuse");
-    if (mDiffLoc == GL_INVALID_VALUE) {
-        err = "material diffuse vector not found in shader";
-        throw err;
-    }
-
-    mSpecLoc = GetUniformLoc("material.specular");
-    if (mSpecLoc == GL_INVALID_VALUE) {
-        err = "material specular vector not found in shader";
-        throw err;
-    }
-
-    mShiLoc = GetUniformLoc("material.shine");
-    if (mShiLoc == GL_INVALID_VALUE) {
-        err = "material shine value not found in shader";
-        throw err;
-    }
-}
-
 
 string Shader::ReadShaderSource(const char *filePath) {
     string content;
@@ -265,33 +196,4 @@ bool Shader::CheckOpenGLError() {
     }
 
     return foundError;
-}
-
-void Shader::InstallLights(glm::mat4 vMatrix, int matIndex) {
-    lightPosV = glm::vec3(vMatrix * glm::vec4(initialLightLoc, 1.0f));
-    lightPos[0] = lightPosV.x;
-    lightPos[1] = lightPosV.y;
-    lightPos[2] = lightPosV.z;
-    
-    //get light/material field locations in the shader
-    globalAmbLoc = GetUniformLoc("globalAmbient");
-    ambLoc = GetUniformLoc("light.ambient");
-    diffLoc = GetUniformLoc("light.diffuse");
-    specLoc = GetUniformLoc("light.specular");
-    posLoc = GetUniformLoc("light.position");
-    mAmbLoc = GetUniformLoc("material.ambient");
-    mDiffLoc = GetUniformLoc("material.diffuse");
-    mSpecLoc = GetUniformLoc("material.specular");
-    mShiLoc = GetUniformLoc("material.shine");
-
-    //Set uniform light/material values in shader
-    SetProg4fv(globalAmbLoc, globalAmbient);
-    SetProg4fv(ambLoc, lightAmbient);
-    SetProg4fv(diffLoc, lightDiffuse);
-    SetProg4fv(specLoc, lightSpecular);
-    SetProg3fv(posLoc, lightPos);
-    SetProg4fv(mAmbLoc, glLighting->GetAmbient(matIndex));
-    SetProg4fv(mDiffLoc, glLighting->GetDiffuse(matIndex));
-    SetProg4fv(mSpecLoc, glLighting->GetSpecular(matIndex));
-    SetProg1f(mShiLoc, glLighting->GetShine(matIndex));
 }
